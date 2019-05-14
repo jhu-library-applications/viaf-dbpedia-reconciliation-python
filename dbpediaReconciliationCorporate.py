@@ -12,13 +12,13 @@ with open('organizations.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         name = str(row['name'])
-        nameEdited = urllib.quote(name.decode('utf-8-sig').encode('utf-8').strip())
+        nameEdited = urllib.quote(name.decode('utf-8-sig').strip())
         url = baseURL+nameEdited.strip()+typeQualifier
         response = requests.get(url).content
         record = BeautifulSoup(response, "lxml").find('html').find('body').find('arrayofresult').find('result')
         try:
-            label = record.find('label').text.encode('utf-8')
-            uri = record.find('uri').text.encode('utf-8')
+            label = record.find('label').text
+            uri = record.find('uri').text
         except:
             label = ''
             uri = ''
